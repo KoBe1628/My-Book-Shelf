@@ -33,6 +33,34 @@ button {
   background-color: #f9f9f9;
 }
 
+/* Book card hover effect */
+.book-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+/* Button hover effect */
+.book-card button:hover {
+  background-color: #ddd;
+  transition: background-color 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.book-card {
+  animation: fadeIn 0.7s ease;
+}
+
 button {
   margin-right: 6px;
   padding: 4px 8px;
@@ -48,3 +76,37 @@ button {
 }
 
 /* ------------------------ */
+
+/* === Responsive Adjustments for Mobile Screens === */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  form {
+    gap: 8px;
+  }
+
+  .book-card {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .book-card button {
+    display: block;
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  #categoryFilter {
+    width: 100%;
+    margin-top: 8px;
+  }
+}

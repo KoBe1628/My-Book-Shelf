@@ -8,7 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>My Bookshelf</h1>
+    <h1 id="formTitle">My Bookshelf</h1>
     <form action="" id="book-form">
       <input type="text" id="title" placeholder="Book Title" required />
       <input type="text" id="author" placeholder="Author" required />
@@ -19,6 +19,8 @@
         <option value="Non-Fiction">Non-Fiction</option>
         <option value="Sci-Fi">Sci-Fi</option>
         <option value="Biography">Biography</option>
+        <option value="Science">Science</option>
+        <option value="History">History</option>
       </select>
 
       <select id="status">
@@ -26,8 +28,19 @@
         <option value="Read">Read</option>
       </select>
 
-      <button type="submit">Add Book</button>
+      <button id="submitBtn" type="submit">Add Book</button>
     </form>
+
+    <label for="categoryFilter">Filter by Category:</label>
+    <select id="categoryFilter" onchange="filterBooksByCategory()">
+      <option value="All">All</option>
+      <option value="Fiction">Fiction</option>
+      <option value="Non-Fiction">Non-Fiction</option>
+      <option value="Sci-Fi">Sci-Fi</option>
+      <option value="Biography">Biography</option>
+      <option value="Science">Science</option>
+      <option value="History">History</option>
+    </select>
 
     <h2>My Library</h2>
     <div id="book-list"></div>

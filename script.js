@@ -1,3 +1,6 @@
+let isEditing = false;
+let editingIndex = null;
+
 document.getElementById("book-form").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -38,6 +41,13 @@ document.getElementById("book-form").addEventListener("submit", function (e) {
   localStorage.setItem("books", JSON.stringify(books));
   this.reset();
   displayBooks();
+
+  // Reset form labels after editing
+  document.getElementById("submitBtn").textContent = "Add Book";
+  document.getElementById("formTitle").textContent = "My Bookshelf";
+
+  isEditing = false;
+  editingIndex = null;
 });
 
 function displayBooks() {
@@ -67,18 +77,49 @@ function displayBooks() {
   });
 }
 
+function filterBooksByCategory() {
+  const selectedCategory = document.getElementById("categoryFilter").value;
+  const container = document.getElementById("book-list");
+  container.innerHTML = "";
+
+  const books = JSON.parse(localStorage.getItem("books")) || [];
+
+  const filteredBooks =
+    selectedCategory === "All"
+      ? books
+      : books.filter((book) => book.category === selectedCategory);
+
+  filteredBooks.forEach((book, index) => {
+    const card = document.createElement("div");
+    card.className = `book-card ${
+      book.status === "Read" ? "read" : "not-read"
+    }`;
+    card.innerHTML = `
+      <strong>${book.title}</strong><br>
+      <em>${book.author}</em><br>
+      Category: ${book.category}<br>
+      Status: ${book.status}<br><br>
+      <button onclick="editBook(${index})">✏️ Edit</button>
+      <button onclick="deleteBook(${index})">🗑️ Delete</button>
+      <button onclick="toggleStatus(${index})">🔁 Toggle Status</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
 function editBook(index) {
   const books = JSON.parse(localStorage.getItem("books")) || [];
   const book = books[index];
 
-  //   Prefill the form fields
   document.getElementById("title").value = book.title;
   document.getElementById("author").value = book.author;
   document.getElementById("category").value = book.category;
   document.getElementById("status").value = book.status;
 
-  // Temporarily store the index we're editing
   document.getElementById("book-form").setAttribute("data-edit-index", index);
+
+  document.getElementById("submitBtn").textContent = "Update Book";
+  document.getElementById("formTitle").textContent = "Edit Book";
 }
 
 function deleteBook(index) {
